@@ -1,9 +1,7 @@
-import chalk from "chalk";
 import pg from "pg";
 const { Pool } = pg;
 
 import config from "../../config";
-// Tipos para `config`
 interface Config {
   DB_USER: string;
   DB_URL: string;
@@ -27,10 +25,10 @@ export const db = new Pool({
 export const conn = async () => {
   try {
     const client = await db.connect();
-    console.log(`${chalk.green("[SERVER]:")} Database connected successfully`);
+    console.log(`[SERVER]: Database connected successfully`);
     return client; // Retorna el cliente de la conexión
   } catch (error) {
-    console.error(`${chalk.red("[ERROR]:")} Failed to connect to database`);
+    console.error(`[ERROR]: Failed to connect to database`);
     console.error(error);
     return null; // Retorna null para manejar la conexión fallida sin finalizar el proceso
   }

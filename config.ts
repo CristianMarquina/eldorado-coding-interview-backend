@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
 import dotenv from "dotenv";
-import chalk from "chalk";
 
 dotenv.config();
 // eslint-disable-next-line no-console
-console.info(`${chalk.green("[local]:")} ${process.env.ENV_NAME}`);
+//console.info(`${chalk.green("[local]:")} ${process.env.ENV_NAME}`);
 const DB_PORT = parseInt(process.env.DB_PORT || "5434", 10); // Valor por defecto
 export default {
   DB_USER: process.env.DB_USER || "",
