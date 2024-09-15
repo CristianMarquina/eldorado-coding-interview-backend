@@ -5,13 +5,16 @@ import {
   Request,
   ServerRoute,
 } from "@hapi/hapi";
+import Joi from "joi";
 import { itemCreateSchema } from "../schemas/itemSchemas";
 import {
   createItem,
   getItems,
   getItemById,
   updateItem,
+  deleteItemById,
 } from "../controllers/itemController";
+import { handleValidationError } from "../../../utils/validatiosnError";
 
 export const itemRoutes: ServerRoute[] = [
   {
@@ -35,12 +38,13 @@ export const itemRoutes: ServerRoute[] = [
       validate: {
         payload: itemCreateSchema,
         failAction: async (request, h, err) => {
-          //console.error("ValidationError:", err);
-          return h.response({ message: err?.message }).code(400).takeover();
+          if (err instanceof Joi.ValidationError) {
+            return handleValidationError(request, h, err);
+          }
         },
       },
+      handler: createItem,
     },
-    handler: createItem,
   },
   {
     method: "GET",
@@ -54,11 +58,18 @@ export const itemRoutes: ServerRoute[] = [
       validate: {
         payload: itemCreateSchema,
         failAction: async (request, h, err) => {
-          //console.error("ValidationError:", err);
-          return h.response({ message: err?.message }).code(400).takeover();
+          if (err instanceof Joi.ValidationError) {
+            return handleValidationError(request, h, err);
+          }
         },
       },
     },
     handler: updateItem,
+  },
+
+  {
+    method: "DELETE",
+    path: "/items/{id}",
+    handler: deleteItemById,
   },
 ];

@@ -93,3 +93,22 @@ export const updateItem = async (request: Request, h: ResponseToolkit) => {
     return h.response({ error: "Internal server error" }).code(500);
   }
 };
+export const deleteItemById = async (request: Request, h: ResponseToolkit) => {
+  try {
+    const id = Number(request.params.id);
+    const item = await Item.findByPk(id);
+
+    if (!item) {
+      return h.response({ error: "Item not found" }).code(404);
+    }
+
+    await Item.update(
+      { is_deleted: true, deleteAt: new Date() },
+      { where: { id } }
+    );
+    return h.response().code(204);
+  } catch (error) {
+    console.error("Error get in items:", error);
+    return h.response({ error: "Internal server error" }).code(500);
+  }
+};
