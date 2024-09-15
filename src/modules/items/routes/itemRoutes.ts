@@ -6,7 +6,12 @@ import {
   ServerRoute,
 } from "@hapi/hapi";
 import { itemCreateSchema } from "../schemas/itemSchemas";
-import { createItem, getItems } from "../controllers/itemController";
+import {
+  createItem,
+  getItems,
+  getItemById,
+  updateItem,
+} from "../controllers/itemController";
 
 export const itemRoutes: ServerRoute[] = [
   {
@@ -36,5 +41,24 @@ export const itemRoutes: ServerRoute[] = [
       },
     },
     handler: createItem,
+  },
+  {
+    method: "GET",
+    path: "/items/{id}",
+    handler: getItemById,
+  },
+  {
+    method: "PUT",
+    path: "/items/{id}",
+    options: {
+      validate: {
+        payload: itemCreateSchema,
+        failAction: async (request, h, err) => {
+          //console.error("ValidationError:", err);
+          return h.response({ message: err?.message }).code(400).takeover();
+        },
+      },
+    },
+    handler: updateItem,
   },
 ];

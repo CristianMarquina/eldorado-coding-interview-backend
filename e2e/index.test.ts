@@ -25,18 +25,18 @@ describe("E2E Tests", () => {
       });
   });
 
-  describe("Basic Items functionality", () => {
+  describe("Basic itemsfunctionality", () => {
     it("should be able to list all items", async () => {
       const response = await server.inject({
         method: "GET",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
       });
       expect(response.statusCode).toBe(200);
       expect(response.result).toEqual([]);
 
       await server.inject({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
           price: 10,
@@ -45,7 +45,7 @@ describe("E2E Tests", () => {
 
       const response2 = await server.inject({
         method: "GET",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
       });
       expect(response2.statusCode).toBe(200);
       expect(response2.result).toEqual([
@@ -60,7 +60,7 @@ describe("E2E Tests", () => {
     it("should be able to create a new item and get it by id", async () => {
       const response = await server.inject<Item>({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
           price: 10,
@@ -75,7 +75,7 @@ describe("E2E Tests", () => {
 
       const response2 = await server.inject({
         method: "GET",
-        url: `/api/v1/items /${response.result!.id}`,
+        url: `/api/v1/items/${response.result!.id}`,
       });
 
       expect(response2.statusCode).toBe(200);
@@ -89,7 +89,7 @@ describe("E2E Tests", () => {
     it("should be able to update an item", async () => {
       const { result: createdItem } = await server.inject<Item>({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
           price: 10,
@@ -100,7 +100,7 @@ describe("E2E Tests", () => {
 
       const response = await server.inject({
         method: "PUT",
-        url: `/api/v1/items /${createdItem!.id}`,
+        url: `/api/v1/items/${createdItem!.id}`,
         payload: {
           name: "Item 1 updated",
           price: 20,
@@ -115,7 +115,7 @@ describe("E2E Tests", () => {
 
       const response2 = await server.inject({
         method: "GET",
-        url: `/api/v1/items /${createdItem!.id}`,
+        url: `/api/v1/items/${createdItem!.id}`,
       });
       expect(response2.statusCode).toBe(200);
       expect(response2.result).toEqual({
@@ -128,7 +128,7 @@ describe("E2E Tests", () => {
     it("should be able to delete an item", async () => {
       const { result: createdItem } = await server.inject<Item>({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
           price: 10,
@@ -139,13 +139,13 @@ describe("E2E Tests", () => {
 
       const response = await server.inject({
         method: "DELETE",
-        url: `/api/v1/items /${createdItem!.id}`,
+        url: `/api/v1/items/${createdItem!.id}`,
       });
       expect(response.statusCode).toBe(204);
 
       const response2 = await server.inject({
         method: "GET",
-        url: `/api/v1/items /${createdItem!.id}`,
+        url: `/api/v1/items/${createdItem!.id}`,
       });
 
       expect(response2.statusCode).toBe(404);
@@ -156,7 +156,7 @@ describe("E2E Tests", () => {
     it("should validate required fields", async () => {
       const response = await server.inject({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
         },
@@ -176,7 +176,7 @@ describe("E2E Tests", () => {
     it("should not allow for negative pricing for new items", async () => {
       const response = await server.inject({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
           price: -10,
@@ -197,7 +197,7 @@ describe("E2E Tests", () => {
     it("should not allow for negative pricing for updated items", async () => {
       const { result: createdItem } = await server.inject<Item>({
         method: "POST",
-        url: "/api/v1/items ",
+        url: "/api/v1/items",
         payload: {
           name: "Item 1",
           price: 10,
@@ -208,7 +208,7 @@ describe("E2E Tests", () => {
 
       const response = await server.inject({
         method: "PUT",
-        url: `/api/v1/items /${createdItem!.id}`,
+        url: `/api/v1/items/${createdItem!.id}`,
         payload: {
           name: "Item 1 updated",
           price: -20,
