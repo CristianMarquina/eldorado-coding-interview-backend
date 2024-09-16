@@ -5,10 +5,11 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
+    "start_old": "nodemon --watch \"./**/*.ts\" --exec \"npx tsx\" src/index.ts",
     "start": "npm run db:migrate && nodemon --watch \"./**/*.ts\" --exec \"npx tsx\" src/index.ts",
     "db:migrate": "npx sequelize-cli db:migrate --config src/config/config.js --migrations-path src/db/migrations",
-    "test_all": "npm run db:migrate && jest e2e",
-    "test": "jest e2e"
+    "test": "npm run db:migrate && jest e2e",
+    "test_old": "jest e2e"
   },
   "author": "El Dorado Dev Team",
   "license": "ISC",
@@ -25,7 +26,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "ts-jest": "^29.0.5"
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.10",

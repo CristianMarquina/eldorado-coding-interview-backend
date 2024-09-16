@@ -1,0 +1,8 @@
+# Ignorar node_modules para que no se copie al contenedor
+node_modules
+# Ignorar el archivo .git
+.git
+# Ignorar archivos de logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log

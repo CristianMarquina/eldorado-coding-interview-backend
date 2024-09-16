@@ -96,7 +96,9 @@ export const updateItem = async (request: Request, h: ResponseToolkit) => {
 export const deleteItemById = async (request: Request, h: ResponseToolkit) => {
   try {
     const id = Number(request.params.id);
-    const item = await Item.findByPk(id);
+    const item = await Item.findOne({
+      where: { id, is_deleted: null },
+    });
 
     if (!item) {
       return h.response({ error: "Item not found" }).code(404);

@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: my_postgres_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: dorado_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - dorado-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dorado_app
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=dorado_db
+      - POSTGRES_HOST=db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - dorado-network
+
+volumes:
+  pg_data:
+
+networks:
+  dorado-network:

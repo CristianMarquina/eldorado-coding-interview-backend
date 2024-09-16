@@ -7,7 +7,7 @@ const development = {
   password: process.env.DB_PWD,
   database: process.env.DB_NAME,
   host: process.env.DB_URL,
-  port: 5434,
+  port: process.env.DB_PORT,
   dialect: "postgres",
 };
 
@@ -16,7 +16,7 @@ const test = {
   password: process.env.DB_PWD,
   database: process.env.DB_NAME,
   host: process.env.DB_URL,
-  port: 5434,
+  port: process.env.DB_PORT,
   dialect: "postgres",
 };
 
@@ -25,7 +25,7 @@ const production = {
   password: process.env.DB_PWD,
   database: process.env.DB_NAME,
   host: process.env.DB_URL,
-  port: 5434,
+  port: process.env.DB_PORT,
   dialect: "postgres",
 };
 

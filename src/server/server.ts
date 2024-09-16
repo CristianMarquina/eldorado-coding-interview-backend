@@ -5,7 +5,7 @@ import { conn } from "../db/conn";
 
 const getServer = () => {
   const server = Hapi.server({
-    host: "localhost",
+    host: '0.0.0.0',
     port: 3000,
   });
   server.realm.modifiers.route.prefix = "/api/v1";
