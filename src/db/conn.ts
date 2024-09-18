@@ -9,10 +9,24 @@ interface Config {
   DB_PWD: string;
   DB_PORT: number;
 }
+/**
+ * Interfaz para la configuración de la base de datos.
+ * @typedef {Object} Config
+ * @property {string} DB_USER - Usuario de la base de datos.
+ * @property {string} DB_URL - URL del servidor de la base de datos.
+ * @property {string} DB_NAME - Nombre de la base de datos.
+ * @property {string} DB_PWD - Contraseña del usuario de la base de datos.
+ * @property {number} DB_PORT - Puerto de conexión a la base de datos.
+ */
+
+/** @type {Config} */
 
 const { DB_USER, DB_URL, DB_NAME, DB_PWD, DB_PORT }: Config = config;
 
-// Crear el pool de conexión
+/**
+ * Pool de conexiones para la base de datos.
+ * @type {pg.Pool}
+ */
 export const db = new Pool({
   user: DB_USER,
   host: DB_URL,
@@ -21,7 +35,11 @@ export const db = new Pool({
   port: DB_PORT,
 });
 
-// Función para verificar la conexión
+/**
+ * Función asíncrona para verificar y obtener una conexión a la base de datos.
+ * @async
+ * @returns {Promise<pg.PoolClient | null>} Retorna el cliente de conexión si la conexión es exitosa, o `null` si falla.
+ */
 export const conn = async () => {
   try {
     const client = await db.connect();

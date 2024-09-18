@@ -5,7 +5,13 @@ interface CreateItemPayload {
   name: string;
   price: number;
 }
-
+/**
+ * Crea un nuevo item en la base de datos.
+ * 
+ * @param {Request} request - Objeto de solicitud HTTP, que contiene el payload con el nombre y precio del item.
+ * @param {ResponseToolkit} h - Herramientas para construir una respuesta HTTP.
+ * @returns {Promise<ResponseObject>} - Respuesta HTTP con el item creado y código de estado 201, o un error en caso de fallo.
+ */
 export const createItem = async (request: Request, h: ResponseToolkit) => {
   const { name, price } = request.payload as CreateItemPayload;
   try {
@@ -19,6 +25,13 @@ export const createItem = async (request: Request, h: ResponseToolkit) => {
   }
 };
 
+/**
+ * Obtiene todos los items que no han sido eliminados de la base de datos.
+ * 
+ * @param {Request} request - Objeto de solicitud HTTP.
+ * @param {ResponseToolkit} h - Herramientas para construir una respuesta HTTP.
+ * @returns {Promise<ResponseObject>} - Respuesta HTTP con una lista de items o un mensaje de error en caso de fallo.
+ */
 export const getItems = async (request: Request, h: ResponseToolkit) => {
   try {
     const items = await Item.findAll({
@@ -42,6 +55,13 @@ export const getItems = async (request: Request, h: ResponseToolkit) => {
     return h.response({ error: "Internal server error" }).code(500);
   }
 };
+/**
+ * Obtiene un item específico por su ID.
+ * 
+ * @param {Request} request - Objeto de solicitud HTTP que contiene el ID del item.
+ * @param {ResponseToolkit} h - Herramientas para construir una respuesta HTTP.
+ * @returns {Promise<ResponseObject>} - Respuesta HTTP con el item solicitado o un mensaje de error en caso de que no se encuentre.
+ */
 export const getItemById = async (request: Request, h: ResponseToolkit) => {
   try {
     const id = Number(request.params.id);
@@ -61,7 +81,13 @@ export const getItemById = async (request: Request, h: ResponseToolkit) => {
     return h.response({ error: "Internal server error" }).code(500);
   }
 };
-
+/**
+ * Actualiza un item existente en la base de datos.
+ * 
+ * @param {Request} request - Objeto de solicitud HTTP que contiene el ID del item y el nuevo nombre y precio.
+ * @param {ResponseToolkit} h - Herramientas para construir una respuesta HTTP.
+ * @returns {Promise<ResponseObject>} - Respuesta HTTP con el item actualizado o un mensaje de error si no se encuentra.
+ */
 export const updateItem = async (request: Request, h: ResponseToolkit) => {
   try {
     const id = Number(request.params.id);
@@ -93,6 +119,14 @@ export const updateItem = async (request: Request, h: ResponseToolkit) => {
     return h.response({ error: "Internal server error" }).code(500);
   }
 };
+/**
+ * Elimina (marca como eliminado) un item por su ID.
+ * 
+ * @param {Request} request - Objeto de solicitud HTTP que contiene el ID del item.
+ * @param {ResponseToolkit} h - Herramientas para construir una respuesta HTTP.
+ * @returns {Promise<ResponseObject>} - Respuesta HTTP con código 204 si se elimina correctamente, o un mensaje de error si no se encuentra.
+ */
+
 export const deleteItemById = async (request: Request, h: ResponseToolkit) => {
   try {
     const id = Number(request.params.id);
